@@ -1,0 +1,25 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f3f7f6;
+}
+
+.profile-container {
+  width: 350px;
+  margin: 80px auto;
+  padding: 25px;
+  background: white;
+  border-radius: 10px;
+}
+
+input, select, button {
+  width: 100%;
+  margin: 10px 0;
+  padding: 8px;
+}
+
+button {
+  background: #2e8b57;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
