@@ -41,4 +41,4 @@ function getDB() {
   return client.db("mentalBuddyDB");
 }
 
-module.exports = { connectDB, getDB }; // i am allowing other files to use these functions
+module.exports = {connectDB, getDB }; // i am allowing other files to use these functions

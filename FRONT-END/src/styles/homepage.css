@@ -12,12 +12,15 @@ body {
   font-family: "Segoe UI", sans-serif;
   background-color: #fdf3ea;
   color: #1f2a37;
+  width: 100%;
 }
+
 .container {
-  max-width: 1200px;
+  /* max-width: 1200px; */
   margin: auto;
-  padding: 80px 40px;
+
 }
+
 .hero {
   min-height: 100vh;
   display: flex;
@@ -29,8 +32,6 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 60px;
-  transform: scale(3);   /* 👈 zoom effect */
-  transform-origin: center;
 }
 
 .hero h1 {
@@ -71,19 +72,22 @@ body {
 .navbar {
     display: flex;
     justify-content: space-between;
+    gap: 40px;
     align-items: center;
     padding: 18px 60px;
     background: white;
 }
-.nav-left img {
-  height: 300px;     /* THIS IS CRITICAL */
+.navbar .nav-left img {
+  height: 100px;     /* THIS IS CRITICAL */
   width: auto;
 }
-.nav-right {
-  font-size: 3rem;
-  list-style: none;
-  gap: 120px;
+.navbar .nav-right {
+  font-size: 2rem;
+  /* list-style: none; */
+  gap: 60px;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
 
 }
 
