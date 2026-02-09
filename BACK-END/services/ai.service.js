@@ -1,7 +1,18 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const OpenAI = require("openai");
 
-// Initialize Gemini
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+// Check for API key
+if (!process.env.OPENAI_API_KEY) {
+    console.warn("⚠️ WARNING: OPENAI_API_KEY is not set in environment variables");
+}
+
+console.log("🔑 OPENAI API KEY FROM ENV:", process.env.OPENAI_API_KEY ? "Set" : "Not Set");
+
+// Initialize OpenAI client
+const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+});
+
+console.log("✅ OpenAI client initialized");
 
 const systemInstruction = `You are an interactive mental health companion named MentalBuddy.
 
@@ -13,38 +24,35 @@ Rules:
 - Vary tone and wording across messages.
 - Avoid sounding robotic or repetitive.`;
 
-const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash",
-    systemInstruction: systemInstruction
-});
-
 async function getChatReply(messages) {
     try {
-        // 1. Separate history (all messages except the last one)
-        // Gemini format: { role: "user" | "model", parts: [{ text: "..." }] }
-        const history = messages.slice(0, -1).map(msg => ({
-            role: msg.role === "assistant" ? "model" : "user",
-            parts: [{ text: msg.content }]
-        }));
+        
+        if (!messages || !Array.isArray(messages) || messages.length === 0) {
+            throw new Error("Messages array must not be empty");
+        }
 
-        // 2. Get the new user message
-        const lastMessage = messages[messages.length - 1];
-        const userMessageContent = lastMessage.content;
+        // OpenAI expects: [{ role: "user" | "assistant", content: string }]
+        // Just pass the messages directly since frontend already provides correct format
+        const openaiMessages = [
+            { role: "system", content: systemInstruction },
+            ...messages
+        ];
 
-        // 3. Start Chat Session with History
-        const chat = model.startChat({
-            history: history,
+        console.log("📤 Calling OpenAI API with", messages.length, "messages");
+
+        const response = await openai.chat.completions.create({
+            model: "gpt-3.5-turbo",
+            messages: openaiMessages,
+            temperature: 0.7,
+            max_tokens: 500,
         });
 
-        // 4. Send Message and Get Response
-        const result = await chat.sendMessage(userMessageContent);
-        const response = await result.response;
-        const text = response.text();
-
-        return text;
+        console.log("✅ OpenAI response received");
+        const reply = response.choices[0].message.content;
+        return reply;
 
     } catch (error) {
-        console.error("❌ [AI Service] Error generating content:", error);
+        console.error("❌ [AI Service] Error calling OpenAI:", error.message);
         throw error; // Re-throw to be handled by the route
     }
 }
