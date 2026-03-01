@@ -16,10 +16,11 @@ function Home() {
         {/* 🔧 CHANGED: wrapped nav in flex container */}
         <nav className="nav-right">
           <Link to="/home">Home</Link>
-          <Link to="/profile">Progress</Link>
-          <Link to="/chat-history">Chat History</Link>
+          <Link to="/progress">Progress</Link>
           <Link to="/depression-test">Depression Test</Link>
           <Link to="/contact">Contact</Link>
+          <Link to="/MoodEntry">Mood Entry</Link>
+          <Link to="/profile">Profile</Link>
         </nav>
       </header>
 

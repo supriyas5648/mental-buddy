@@ -31,8 +31,18 @@ body {
 
 .nav-right a {
   text-decoration: none;
-  color: #5b6cff;
-  font-weight: 500;
+  color: white;
+  font-weight: 600;
+  background: #5b6cff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.nav-right a:hover {
+  background: #4a5acc;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(91, 108, 255, 0.3);
 }
 
 /* ================= HERO SECTION ================= */

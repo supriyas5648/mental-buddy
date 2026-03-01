@@ -1,26 +1,229 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "../styles/profile.css";
 
 function Profile() {
-  const [profile, setProfile] = useState({});
-
-  if (!profile) { //avoid blank page illusion
-  return <h2>Loading profile...</h2>;
-}
-
-  useEffect(() => {
-    axios.get("http://localhost:5000/api/profile", {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
-    })
-    .then(res => setProfile(res.data))
-     .catch(err => {
-      console.error("PROFILE API ERROR:", err);
+  const navigate = useNavigate();
+  const [profile, setProfile] = useState({
+    name: "",
+    bio: "",
+    avatar: "",
+    age: null,
+    location: ""
   });
-  }, []);
+  const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [editData, setEditData] = useState({
+    bio: "",
+    avatar: ""
+  });
 
-  return <pre>{JSON.stringify(profile, null, 2)}</pre>;
+  // Fetch profile data on component mount
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          navigate("/login");
+          return;
+        }
+
+        const response = await axios.get("http://localhost:5000/api/profile", {
+          headers: {
+            Authorization: "Bearer " + token
+          }
+        });
+
+        if (response.data && response.data._id) {
+          setProfile(response.data);
+          setEditData({
+            bio: response.data.bio || "",
+            avatar: response.data.avatar || ""
+          });
+        }
+        setLoading(false);
+      } catch (err) {
+        console.error("PROFILE FETCH ERROR:", err);
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, [navigate]);
+
+  // Handle file upload for profile photo
+  const handlePhotoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setEditData({
+          ...editData,
+          avatar: reader.result
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Handle bio change
+  const handleBioChange = (e) => {
+    setEditData({
+      ...editData,
+      bio: e.target.value
+    });
+  };
+
+  // Save profile updates
+  const handleSaveProfile = async () => {
+    try {
+      setSaving(true);
+      const token = localStorage.getItem("token");
+
+      await axios.post(
+        "http://localhost:5000/api/profile",
+        {
+          bio: editData.bio,
+          avatar: editData.avatar
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + token
+          }
+        }
+      );
+
+      // Update local profile state
+      setProfile({
+        ...profile,
+        bio: editData.bio,
+        avatar: editData.avatar
+      });
+
+      setIsEditing(false);
+      setSaving(false);
+      alert("Profile updated successfully!");
+    } catch (err) {
+      console.error("PROFILE UPDATE ERROR:", err);
+      setSaving(false);
+      alert("Failed to update profile");
+    }
+  };
+
+  if (loading) {
+    return <h2 className="loading">Loading profile...</h2>;
+  }
+
+  return (
+    <div className="profile-container">
+      <div className="profile-header">
+        <h1>My Profile</h1>
+      </div>
+
+      <div className="profile-content">
+        {/* Profile Display Section */}
+        {!isEditing ? (
+          <div className="profile-display">
+            <div className="profile-photo-section">
+              {profile.avatar ? (
+                <img src={profile.avatar} alt="Profile" className="profile-photo" />
+              ) : (
+                <div className="profile-photo-placeholder">
+                  <span>📷</span>
+                </div>
+              )}
+            </div>
+
+            <div className="profile-info">
+              <div className="info-item">
+                <label>Name:</label>
+                <p>{profile.name || "Not set"}</p>
+              </div>
+
+              <div className="info-item">
+                <label>Bio:</label>
+                <p>{profile.bio || "No bio added yet"}</p>
+              </div>
+
+              <div className="info-item">
+                <label>Age:</label>
+                <p>{profile.age || "Not set"}</p>
+              </div>
+
+              <div className="info-item">
+                <label>Location:</label>
+                <p>{profile.location || "Not set"}</p>
+              </div>
+            </div>
+
+            <button className="edit-btn" onClick={() => setIsEditing(true)}>
+              ✏️ Update Profile
+            </button>
+          </div>
+        ) : (
+          /* Profile Edit Section */
+          <div className="profile-edit">
+            <div className="edit-photo-section">
+              {editData.avatar ? (
+                <img src={editData.avatar} alt="Profile Preview" className="profile-photo" />
+              ) : (
+                <div className="profile-photo-placeholder">
+                  <span>📷</span>
+                </div>
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handlePhotoChange}
+                className="photo-input"
+                id="photo-upload"
+              />
+              <label htmlFor="photo-upload" className="photo-label">
+                Choose Photo
+              </label>
+            </div>
+
+            <div className="profile-edit-form">
+              <div className="form-group">
+                <label htmlFor="bio">Bio:</label>
+                <textarea
+                  id="bio"
+                  value={editData.bio}
+                  onChange={handleBioChange}
+                  placeholder="Tell us about yourself..."
+                  rows="5"
+                />
+              </div>
+
+              <div className="form-actions">
+                <button
+                  className="save-btn"
+                  onClick={handleSaveProfile}
+                  disabled={saving}
+                >
+                  {saving ? "Saving..." : "Save Changes"}
+                </button>
+                <button
+                  className="cancel-btn"
+                  onClick={() => {
+                    setIsEditing(false);
+                    setEditData({
+                      bio: profile.bio || "",
+                      avatar: profile.avatar || ""
+                    });
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default Profile;
