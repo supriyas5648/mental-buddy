@@ -10,14 +10,19 @@ function Profile() {
     bio: "",
     avatar: "",
     age: null,
-    location: ""
+    location: "",
+    preferences: { buddy: "female" } // default
   });
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [editData, setEditData] = useState({
+    name: "",
     bio: "",
-    avatar: ""
+    avatar: "",
+    age: null,
+    location: "",
+    preferences: { buddy: "female" }
   });
 
   // Fetch profile data on component mount
@@ -39,8 +44,12 @@ function Profile() {
         if (response.data && response.data._id) {
           setProfile(response.data);
           setEditData({
+            name: response.data.name || "",
             bio: response.data.bio || "",
-            avatar: response.data.avatar || ""
+            avatar: response.data.avatar || "",
+            age: response.data.age || null,
+            location: response.data.location || "",
+            preferences: response.data.preferences || { buddy: "female" }
           });
         }
         setLoading(false);
@@ -68,11 +77,54 @@ function Profile() {
     }
   };
 
+  // Remove profile photo (set to empty string)
+  const handleRemovePhoto = () => {
+    setEditData({
+      ...editData,
+      avatar: ""
+    });
+  };
+
+  // Handle name change
+  const handleNameChange = (e) => {
+    setEditData({
+      ...editData,
+      name: e.target.value
+    });
+  };
+
+  // handle buddy preference change
+  const handleBuddyChange = (e) => {
+    setEditData({
+      ...editData,
+      preferences: {
+        ...editData.preferences,
+        buddy: e.target.value
+      }
+    });
+  };
+
   // Handle bio change
   const handleBioChange = (e) => {
     setEditData({
       ...editData,
       bio: e.target.value
+    });
+  };
+
+  // Handle age change
+  const handleAgeChange = (e) => {
+    setEditData({
+      ...editData,
+      age: e.target.value ? parseInt(e.target.value) : null
+    });
+  };
+
+  // Handle location change
+  const handleLocationChange = (e) => {
+    setEditData({
+      ...editData,
+      location: e.target.value
     });
   };
 
@@ -85,8 +137,12 @@ function Profile() {
       await axios.post(
         "http://localhost:5000/api/profile",
         {
+          name: editData.name,
           bio: editData.bio,
-          avatar: editData.avatar
+          avatar: editData.avatar,
+          age: editData.age,
+          location: editData.location,
+          preferences: editData.preferences // includes buddy
         },
         {
           headers: {
@@ -98,8 +154,12 @@ function Profile() {
       // Update local profile state
       setProfile({
         ...profile,
+        name: editData.name,
         bio: editData.bio,
-        avatar: editData.avatar
+        avatar: editData.avatar,
+        age: editData.age,
+        location: editData.location,
+        preferences: editData.preferences
       });
 
       setIsEditing(false);
@@ -156,6 +216,11 @@ function Profile() {
                 <label>Location:</label>
                 <p>{profile.location || "Not set"}</p>
               </div>
+
+              <div className="info-item">
+                <label>Buddy avatar:</label>
+                <p>{(profile.preferences && profile.preferences.buddy) || "female"}</p>
+              </div>
             </div>
 
             <button className="edit-btn" onClick={() => setIsEditing(true)}>
@@ -167,7 +232,16 @@ function Profile() {
           <div className="profile-edit">
             <div className="edit-photo-section">
               {editData.avatar ? (
-                <img src={editData.avatar} alt="Profile Preview" className="profile-photo" />
+                <>
+                  <img src={editData.avatar} alt="Profile Preview" className="profile-photo" />
+                  <button
+                    type="button"
+                    className="remove-photo-btn"
+                    onClick={handleRemovePhoto}
+                  >
+                    Remove Photo
+                  </button>
+                </>
               ) : (
                 <div className="profile-photo-placeholder">
                   <span>📷</span>
@@ -187,6 +261,41 @@ function Profile() {
 
             <div className="profile-edit-form">
               <div className="form-group">
+                <label htmlFor="name">Name:</label>
+                <input
+                  type="text"
+                  id="name"
+                  value={editData.name}
+                  onChange={handleNameChange}
+                  placeholder="Your full name"
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="age">Age:</label>
+                <input
+                  type="number"
+                  id="age"
+                  value={editData.age || ""}
+                  onChange={handleAgeChange}
+                  placeholder="Your age"
+                  min="13"
+                  max="120"
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="location">Location:</label>
+                <input
+                  type="text"
+                  id="location"
+                  value={editData.location}
+                  onChange={handleLocationChange}
+                  placeholder="Your city or region"
+                />
+              </div>
+
+              <div className="form-group">
                 <label htmlFor="bio">Bio:</label>
                 <textarea
                   id="bio"
@@ -195,6 +304,18 @@ function Profile() {
                   placeholder="Tell us about yourself..."
                   rows="5"
                 />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="buddy">Choose Buddy</label>
+                <select
+                  id="buddy"
+                  value={editData.preferences.buddy}
+                  onChange={handleBuddyChange}
+                >
+                  <option value="female">Female Buddy</option>
+                  <option value="male">Male Buddy</option>
+                </select>
               </div>
 
               <div className="form-actions">
@@ -210,8 +331,12 @@ function Profile() {
                   onClick={() => {
                     setIsEditing(false);
                     setEditData({
+                      name: profile.name || "",
                       bio: profile.bio || "",
-                      avatar: profile.avatar || ""
+                      avatar: profile.avatar || "",
+                      age: profile.age || null,
+                      location: profile.location || "",
+                      preferences: profile.preferences || { buddy: "female" }
                     });
                   }}
                 >

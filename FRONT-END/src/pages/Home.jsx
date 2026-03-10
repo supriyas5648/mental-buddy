@@ -1,10 +1,39 @@
+// homepage now fetches profile preferences on mount
+// the buddy selection determines which asset (female-frnd/male-frnd)
+// is displayed in the hero section instead of the static avatar
 import "../styles/homepage.css";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import logo from "../assets/app_logo.jpg";
-import avatar from "../assets/female-avatar.png";
+import femaleBuddy from "../assets/female-frnd.png";
+import maleBuddy from "../assets/male-frnd.png";
 import { Link, useNavigate } from "react-router-dom";
 
 function Home() {
   const navigate = useNavigate();
+  const [buddyImg, setBuddyImg] = useState(femaleBuddy);
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+        const res = await axios.get("http://localhost:5000/api/profile", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const pref = res.data.preferences;
+        if (pref && pref.buddy === "male") {
+          setBuddyImg(maleBuddy);
+        } else {
+          setBuddyImg(femaleBuddy);
+        }
+      } catch (err) {
+        console.error("Failed to load profile in Home:", err);
+      }
+    };
+    loadProfile();
+  }, []);
+
   return (
     <>
       {/* NAVBAR */}
@@ -54,7 +83,7 @@ function Home() {
           </div>
 
           <div className="hero-right">
-            <img src={avatar} alt="Mental Buddy Avatar" />
+            <img src={buddyImg} alt="Mental Buddy Avatar" />
           </div>
         </div>
       </section>

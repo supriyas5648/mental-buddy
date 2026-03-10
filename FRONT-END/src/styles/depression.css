@@ -1,0 +1,229 @@
+/* Depression Test Page Styles */
+
+.depression-test-container {
+  min-height: 100vh;
+  background-color: var(--background-color);
+  padding: 40px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.depression-test-card {
+  background: var(--card-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-soft);
+}
+
+.depression-test-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  padding: 40px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.depression-test-card h1 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 28px;
+  text-align: center;
+}
+
+.depression-test-card .description {
+  color: #666;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.depression-test-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.depression-textarea {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+  background-color: #f9f9f9;
+}
+
+.depression-textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.depression-textarea:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 13px;
+  margin: -10px 0 10px 0;
+}
+
+.depression-test-btn {
+  background-color: var(--button-color);
+  color: var(--card-color);
+  padding: 12px 30px;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.depression-test-btn:hover:not(:disabled) {
+  background-color: var(--button-hover);
+}
+
+.depression-test-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+}
+
+.depression-test-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.depression-test-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.result-section {
+  margin-top: 30px;
+  animation: slideIn 0.3s ease;
+}
+
+/* progress bar area */
+.progress-bar-wrapper {
+  position: relative;
+  width: 100%;
+  background: #e2e8f0;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  height: 24px;
+  margin: 20px 0;
+}
+
+.progress-bar {
+  height: 100%;
+  background: var(--button-color);
+  transition: width 0.4s ease;
+}
+
+.progress-label {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.9rem;
+  line-height: 24px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.explanation {
+  margin-top: 10px;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-section h2 {
+  color: #333;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.result-box {
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 5px solid;
+  margin-bottom: 20px;
+}
+
+.result-box.warning {
+  background-color: #fff3cd;
+  border-color: #ffc107;
+}
+
+.result-box.normal {
+  background-color: #d4edda;
+  border-color: #28a745;
+}
+
+.result-message {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 10px 0;
+}
+
+.result-score {
+  font-size: 14px;
+  color: #555;
+  margin: 0;
+}
+
+.result-score strong {
+  font-weight: 700;
+  color: #333;
+}
+
+.info-message {
+  background-color: #e3f2fd;
+  border-left: 4px solid #2196f3;
+  padding: 15px;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #1565c0;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .depression-test-container {
+    padding: 20px 15px;
+  }
+
+  .depression-test-card {
+    padding: 25px 20px;
+  }
+
+  .depression-test-card h1 {
+    font-size: 24px;
+  }
+
+  .depression-textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 12px;
+  }
+}

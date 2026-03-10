@@ -3,9 +3,9 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background-color: #f7f7f8;
+    background-color: var(--background-color);
     /* Light gray background like ChatGPT */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: var(--font-family);
 }
 
 /* ================= HEADER ================= */
@@ -14,9 +14,9 @@
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
-    background-color: #ffffff;
+    background-color: var(--card-color);
     border-bottom: 1px solid #e5e5e5;
-    color: #333;
+    color: var(--text-primary);
 }
 
 .chat-header h2 {
@@ -64,9 +64,8 @@
 /* User Message (Right Aligned) */
 .message.user {
     align-self: flex-end;
-    background-color: #5b6cff;
-    /* Blue */
-    color: white;
+    background-color: var(--button-color);
+    color: var(--card-color);
     border-bottom-right-radius: 4px;
 }
 
@@ -131,7 +130,7 @@
     background-color: transparent;
     border: none;
     cursor: pointer;
-    color: #007bff;
+    color: var(--button-color);
     font-size: 1.2rem;
     padding: 8px;
     transition: color 0.2s;

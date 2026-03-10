@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const { connectDB, getDB } = require("../db");
 const User = require("../models/User");
 const Profile = require("../models/Profile");
+const { sendGoogleLoginEmail } = require("../utils/emailService");
 
 const router = express.Router();
 
@@ -127,15 +128,27 @@ router.post("/google", async (req, res) => {
     }
 
     if (user) {
-      // existing user, generate token
+      // Existing user - generate token
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+      
+      // Send login notification email (non-blocking - don't fail login if email fails)
+      sendGoogleLoginEmail(user.email, user.name).catch(err => 
+        console.error("Email send failed (non-blocking):", err.message)
+      );
+      
       return res.json({ msg: "Login successful", token, user: { id: user._id, name: user.name, email: user.email } });
     }
 
-    // create new user
+    // Create new user
     const newUserObj = { name, email, googleId };
     const result = await User.create(db, newUserObj);
     const token = jwt.sign({ userId: result.insertedId }, process.env.JWT_SECRET, { expiresIn: "7d" });
+    
+    // Send login notification email for new user (non-blocking - don't fail login if email fails)
+    sendGoogleLoginEmail(email, name).catch(err => 
+      console.error("Email send failed (non-blocking):", err.message)
+    );
+    
     res.status(201).json({ msg: "User created successfully", token, user: { id: result.insertedId, name, email } });
   } catch (err) {
     console.error("Google auth error:", err);

@@ -1,0 +1,15 @@
+:root {
+  /* color palette based on Home page soft beige theme */
+  --primary-color: #1f2a37;        /* dark navy/charcoal used for text/buttons */
+  --secondary-color: #fdf3ea;      /* light beige background accent */
+  --background-color: #fdf3ea;     /* page background */
+  --card-color: #ffffff;           /* card / container surfaces */
+  --text-primary: #1f2a37;         /* main text color */
+  --text-secondary: #718096;       /* subdued text (formerly gray) */
+  --button-color: #1f2a37;         /* primary button background */
+  --button-hover: #171f28;         /* darker shade for hover */
+  --font-family: "Segoe UI", sans-serif;
+  --border-radius: 12px;
+  --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.1);
+  --shadow-strong: 0 20px 60px rgba(0, 0, 0, 0.3);
+}

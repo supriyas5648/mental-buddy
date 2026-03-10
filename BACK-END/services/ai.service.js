@@ -43,7 +43,7 @@ async function getChatReply(messages) {
         const response = await openai.chat.completions.create({
             model: "gpt-3.5-turbo",
             messages: openaiMessages,
-            temperature: 0.7,
+            temperature: 0.2,
             max_tokens: 500,
         });
 
@@ -57,4 +57,27 @@ async function getChatReply(messages) {
     }
 }
 
-module.exports = { getChatReply };
+// new helper for depression analysis requests
+async function analyzeDepression(text) {
+    // build the same prompt used previously in the route
+    const userPrompt = `You are a mental health analysis assistant.
+     Analyze the following text written by a user and estimate the 
+     likelihood that the user is experiencing depressive symptoms.
+
+Return ONLY a JSON response in this format:
+{\n"depression_percentage": number,\n"severity": "none | mild | moderate | severe",\n"explanation": "short explanation"\n}
+
+User text:
+${text}`;
+    const aiResp = await getChatReply([{ role: "user", content: userPrompt }]);
+    // parse before returning
+    try {
+        console.log("AI RAW RESPONSE:", aiResp);
+        return JSON.parse(aiResp);
+    } catch (err) {
+        console.error("❌ [AI Service] parse error in analyzeDepression:", aiResp);
+        throw new Error("Invalid AI response");
+    }
+}
+
+module.exports = { getChatReply, analyzeDepression };
