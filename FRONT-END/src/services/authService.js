@@ -2,7 +2,9 @@
 import axios from "axios";
 
 // CREATE AXIOS INSTANCE WITH BASE URL
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "https://mental-buddy-st06.onrender.com/api";
+
+//
 
 const authAPI = axios.create({
   baseURL: API_BASE_URL,

@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/profile.css";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 function Profile() {
   const navigate = useNavigate();
   const [profile, setProfile] = useState({
@@ -35,7 +37,7 @@ function Profile() {
           return;
         }
 
-        const response = await axios.get("http://localhost:5000/api/profile", {
+        const response = await axios.get(`${API_BASE_URL}/profile`, {
           headers: {
             Authorization: "Bearer " + token
           }
@@ -135,7 +137,7 @@ function Profile() {
       const token = localStorage.getItem("token");
 
       await axios.post(
-        "http://localhost:5000/api/profile",
+        `${API_BASE_URL}/profile`,
         {
           name: editData.name,
           bio: editData.bio,

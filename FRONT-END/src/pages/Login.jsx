@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../styles/login.css";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 function Login() {
   const navigate = useNavigate();
 
@@ -51,7 +53,7 @@ function Login() {
 
     try {
       // SEND LOGIN REQUEST TO BACKEND
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
+      const res = await axios.post(`${API_BASE_URL}/auth/login`, {
         email,
         password,
       });
@@ -96,7 +98,7 @@ function Login() {
       const googleUser = JSON.parse(jsonPayload);
 
       // Send Google user data to backend
-      const res = await axios.post("http://localhost:5000/api/auth/google", {
+      const res = await axios.post(`${API_BASE_URL}/auth/google`, {
         name: googleUser.name,
         email: googleUser.email,
         googleId: googleUser.sub, // Google's unique user ID

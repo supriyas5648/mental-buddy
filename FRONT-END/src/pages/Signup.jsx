@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../styles/signup.css";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 function Signup() {
   const navigate = useNavigate();
 
@@ -24,7 +26,7 @@ function Signup() {
 
     try {
       // SEND SIGNUP REQUEST TO BACKEND
-      const res = await axios.post("http://localhost:5000/api/auth/signup", {
+      const res = await axios.post(`${API_BASE_URL}/auth/signup`, {
         name,
         email,
         password,

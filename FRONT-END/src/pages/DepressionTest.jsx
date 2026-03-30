@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../styles/depression.css";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 function DepressionTest() {
   const [text, setText] = useState("");
   const [result, setResult] = useState(null);
@@ -23,7 +25,7 @@ function DepressionTest() {
       const token = localStorage.getItem("token");
       // Send POST request to backend
       const response = await axios.post(
-        "http://localhost:5000/api/depression/analyze-text",
+        `${API_BASE_URL}/depression/analyze-text`,
         { text },
         {
           headers: { Authorization: `Bearer ${token}` }

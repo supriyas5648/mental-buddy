@@ -9,6 +9,9 @@ import femaleBuddy from "../assets/female-frnd.png";
 import maleBuddy from "../assets/male-frnd.png";
 import { Link, useNavigate } from "react-router-dom";
 
+// const API_BASE_URL = "https://mental-buddy-st06.onrender.com/api";
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 function Home() {
   const navigate = useNavigate();
   const [buddyImg, setBuddyImg] = useState(femaleBuddy);
@@ -18,7 +21,7 @@ function Home() {
       try {
         const token = localStorage.getItem("token");
         if (!token) return;
-        const res = await axios.get("http://localhost:5000/api/profile", {
+        const res = await axios.get(`${API_BASE_URL}/profile`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         const pref = res.data.preferences;

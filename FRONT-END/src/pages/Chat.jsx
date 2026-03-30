@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "../styles/chat.css";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 function Chat() {
     // Initial State: No mock messages, just empty or a welcome system message if desired.
     // We start empty to strictly follow "NO mock data" requirement, or a strictly UI-only welcome.
@@ -54,7 +56,7 @@ function Chat() {
             console.log("📤 Sending to Backend:", payload);
 
             // 3. Real API Call
-            const response = await fetch("http://localhost:5000/api/chat", {
+            const response = await fetch(`${API_BASE_URL}/chat`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
