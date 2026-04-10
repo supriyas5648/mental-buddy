@@ -1,6 +1,18 @@
+
 import { useState, useEffect } from "react";
 import { moodAPI } from "../services/api";
+import MoodCard from "../components/MoodCard";
+import FriendlyButton from "../components/FriendlyButton";
+import "../components/BreathingBackground.css";
 import "../styles/mood.css";
+
+const moodColors = {
+  happy: "border-pink-200",
+  sad: "border-blue-200",
+  anxious: "border-yellow-200",
+  calm: "border-green-200",
+  angry: "border-red-200",
+};
 
 function MoodEntry() {
   const moodOptions = [
@@ -8,7 +20,7 @@ function MoodEntry() {
     { value: "sad", label: "Sad", emoji: "😔" },
     { value: "anxious", label: "Anxious", emoji: "😟" },
     { value: "calm", label: "Calm", emoji: "😌" },
-    { value: "angry", label: "Angry", emoji: "😡" }
+    { value: "angry", label: "Angry", emoji: "😡" },
   ];
 
   const [selectedMood, setSelectedMood] = useState("");
@@ -17,9 +29,10 @@ function MoodEntry() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [today, setToday] = useState("");
 
-  // Check if user already has a mood entry for today
   useEffect(() => {
+    setToday(new Date().toLocaleDateString());
     const loadTodayMood = async () => {
       try {
         const response = await moodAPI.getTodayMood();
@@ -29,10 +42,9 @@ function MoodEntry() {
           setHasSubmitted(true);
         }
       } catch (err) {
-        console.log("No mood entry found for today");
+        // No mood entry for today
       }
     };
-
     loadTodayMood();
   }, []);
 
@@ -40,34 +52,38 @@ function MoodEntry() {
     e.preventDefault();
     setError("");
     setMessage("");
-
     if (!selectedMood) {
       setError("Please select a mood");
       return;
     }
-
     setLoading(true);
-
     try {
-      const response = await moodAPI.saveMood(selectedMood, note);
+      await moodAPI.saveMood(selectedMood, note);
       setMessage(hasSubmitted ? "Mood updated successfully! 🎉" : "Mood saved successfully! 🎉");
       setHasSubmitted(true);
-      
-      // Clear message after 3 seconds
       setTimeout(() => setMessage(""), 3000);
     } catch (err) {
       setError(err.msg || "Failed to save mood. Please try again.");
-      console.error("Save mood error:", err);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="mood-entry-container">
-      <div className="mood-entry-card">
-        <h1 className="mood-title">How are you feeling today?</h1>
-        <p className="mood-subtitle">Your mental health matters. Track your mood daily.</p>
+    <div className="mood-entry-container" style={{ background: "linear-gradient(120deg, #ffe0ec 0%, #e0f7fa 100%)" }}>
+      <div className="mood-entry-card" style={{ background: "rgba(255,255,255,0.85)", boxShadow: "0 8px 32px #ffe0ec55" }}>
+        <h1 className="mood-title friendly">How are you feeling today?</h1>
+        <p className="mood-subtitle">This is your private journal. Your feelings matter. 💛</p>
+
+        {hasSubmitted && (
+          <MoodCard
+            mood={moodOptions.find(m => m.value === selectedMood)?.label}
+            note={note}
+            date={today}
+            emoji={moodOptions.find(m => m.value === selectedMood)?.emoji}
+            color={moodColors[selectedMood]}
+          />
+        )}
 
         <form onSubmit={handleSubmit} className="mood-form">
           {/* Mood Selector */}
@@ -85,9 +101,9 @@ function MoodEntry() {
                     onChange={(e) => setSelectedMood(e.target.value)}
                     className="mood-radio"
                   />
-                  <label htmlFor={option.value} className="mood-option-label">
+                  <label htmlFor={option.value} className="mood-option-label animate-float">
                     <span className="mood-emoji">{option.emoji}</span>
-                    <span className="mood-text">{option.label}</span>
+                    <span className="mood-text friendly">{option.label}</span>
                   </label>
                 </div>
               ))}
@@ -106,18 +122,19 @@ function MoodEntry() {
               value={note}
               onChange={(e) => setNote(e.target.value)}
               rows="4"
+              maxLength={200}
             />
             <div className="char-count">{note.length} / 200</div>
           </div>
 
           {/* Submit Button */}
-          <button
+          <FriendlyButton
             type="submit"
             disabled={loading || !selectedMood}
-            className="submit-btn"
+            style={{ marginTop: 10 }}
           >
             {loading ? "Saving..." : hasSubmitted ? "Update Mood" : "Save Mood"}
-          </button>
+          </FriendlyButton>
         </form>
 
         {/* Messages */}

@@ -1,0 +1,70 @@
+// src/components/BreathingBackground.css
+.breathing-bg {
+  background: linear-gradient(120deg, #ffe0ec 0%, #e0f7fa 100%);
+  animation: breathing 8s ease-in-out infinite;
+}
+
+@keyframes breathing {
+  0%, 100% {
+    filter: brightness(1) blur(0px);
+  }
+  50% {
+    filter: brightness(1.07) blur(1.5px);
+  }
+}
+
+.avatar-breathing {
+  animation: avatar-breathing 3s ease-in-out infinite;
+}
+
+@keyframes avatar-breathing {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+.animate-bubble-pop {
+  animation: bubble-pop 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes bubble-pop {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite alternate;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.7s ease;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

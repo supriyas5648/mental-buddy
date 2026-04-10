@@ -2,7 +2,7 @@
 import axios from "axios";
 
 // CREATE AXIOS INSTANCE WITH BASE URL
-const API_BASE_URL = "https://mental-buddy-st06.onrender.com/api";
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 //
 

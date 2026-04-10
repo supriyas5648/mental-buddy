@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Nunito:wght@400;700&display=swap');
+
 :root {
   /* color palette based on Home page soft beige theme */
   --primary-color: #1f2a37;        /* dark navy/charcoal used for text/buttons */
@@ -12,4 +14,21 @@
   --border-radius: 12px;
   --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.1);
   --shadow-strong: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+body {
+  font-family: 'Quicksand', 'Nunito', Arial, sans-serif;
+  background: #fffaf7;
+  color: #3a3a3a;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Nunito', 'Quicksand', Arial, sans-serif;
+  font-weight: 700;
+}
+
+.friendly {
+  font-family: 'Quicksand', 'Nunito', Arial, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
