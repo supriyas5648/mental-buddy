@@ -1,6 +1,6 @@
  /* src/components/BreathingBackground.css */
 .breathing-bg {
-  background: linear-gradient(120deg, #ffe0ec 0%, #e0f7fa 100%);
+  background: linear-gradient(120deg, #e6f9ec 0%, #e0f7fa 100%);
   animation: breathing 8s ease-in-out infinite;
 }
 
@@ -104,7 +104,7 @@
 }
 
 .message.user .message-content {
-  background-color: #d1e7ff;
+  background-color: #e6f9ec;
 }
 
 .name {

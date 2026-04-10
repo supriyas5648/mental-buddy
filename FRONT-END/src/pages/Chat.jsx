@@ -119,7 +119,7 @@ function Chat() {
         <BreathingBackground>
             <div className="chat-container" style={{ background: "transparent" }}>
                 {/* Header */}
-                <header className="chat-header" style={{ background: "rgba(255,255,255,0.7)", boxShadow: "0 2px 8px #ffe0ec33" }}>
+                <header className="chat-header" style={{ background: "rgba(255,255,255,0.7)", boxShadow: "0 2px 8px #e6f9ec33" }}>
                     <Link to="/home" className="back-btn">← Back</Link>
                     <div className="flex items-center gap-2">
                         <AnimatedAvatar src={aiAvatar} alt="Buddy Avatar" />

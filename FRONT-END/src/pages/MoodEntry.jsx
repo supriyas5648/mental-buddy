@@ -7,7 +7,7 @@ import "../components/BreathingBackground.css";
 import "../styles/mood.css";
 
 const moodColors = {
-  happy: "border-pink-200",
+  happy: "border-green-200",
   sad: "border-blue-200",
   anxious: "border-yellow-200",
   calm: "border-green-200",
@@ -70,8 +70,8 @@ function MoodEntry() {
   };
 
   return (
-    <div className="mood-entry-container" style={{ background: "linear-gradient(120deg, #ffe0ec 0%, #e0f7fa 100%)" }}>
-      <div className="mood-entry-card" style={{ background: "rgba(255,255,255,0.85)", boxShadow: "0 8px 32px #ffe0ec55" }}>
+    <div className="mood-entry-container" style={{ background: "linear-gradient(120deg, #e6f9ec 0%, #e0f7fa 100%)" }}>
+      <div className="mood-entry-card" style={{ background: "rgba(255,255,255,0.85)", boxShadow: "0 8px 32px #e6f9ec55" }}>
         <h1 className="mood-title friendly">How are you feeling today?</h1>
         <p className="mood-subtitle">This is your private journal. Your feelings matter. 💛</p>
 

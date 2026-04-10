@@ -130,25 +130,25 @@ function Progress() {
         ],
         backgroundColor: [
           "rgba(255, 193, 7, 0.7)", // Happy - Yellow
-          "rgba(244, 67, 54, 0.7)", // Sad - Red
-          "rgba(233, 30, 99, 0.7)", // Anxious - Pink
-          "rgba(76, 175, 80, 0.7)", // Calm - Green
+          "rgba(56, 142, 60, 0.7)", // Sad - Green (changed from red)
+          "rgba(76, 175, 80, 0.7)", // Anxious - Light Green (changed from pink)
+          "rgba(139, 195, 74, 0.7)", // Calm - Light Green
           "rgba(233, 121, 12, 0.7)" // Angry - Orange
         ],
         borderColor: [
           "rgba(255, 193, 7, 1)",
-          "rgba(244, 67, 54, 1)",
-          "rgba(233, 30, 99, 1)",
-          "rgba(76, 175, 80, 1)",
+          "rgba(56, 142, 60, 1)", // Changed from red
+          "rgba(76, 175, 80, 1)", // Changed from pink
+          "rgba(139, 195, 74, 1)",
           "rgba(233, 121, 12, 1)"
         ],
         borderWidth: 2,
         borderRadius: 8,
         hoverBackgroundColor: [
           "rgba(255, 193, 7, 0.9)",
-          "rgba(244, 67, 54, 0.9)",
-          "rgba(233, 30, 99, 0.9)",
-          "rgba(76, 175, 80, 0.9)",
+          "rgba(56, 142, 60, 0.9)", // Changed from red
+          "rgba(76, 175, 80, 0.9)", // Changed from pink
+          "rgba(139, 195, 74, 0.9)",
           "rgba(233, 121, 12, 0.9)"
         ]
       }

@@ -6,7 +6,7 @@
 - **Emotional Hook**: Homepage should immediately resonate with users’ feelings.
 
 ## Visual & Interaction Guidelines
-- **Colors**: Use soft pastels, gentle gradients, and warm undertones (peach, lavender, mint, sky blue, blush pink).
+- **Colors**: Use soft pastels, gentle gradients, and warm undertones (peach, lavender, mint, sky blue, blush pink). Updated to green theme for a more calming effect (mint greens, teal accents).
 - **Typography**: Friendly, rounded fonts (e.g., Quicksand, Nunito, Comfortaa). Avoid harsh, corporate typefaces.
 - **Micro-interactions**: Add hover effects, button ripples, card lifts, and smooth transitions.
 - **Animations**: Subtle breathing backgrounds, floating icons, gentle fade-ins.
@@ -46,6 +46,20 @@
 3. Refactor pages to use new components and layouts.
 4. Add animations and micro-interactions.
 5. Test for emotional impact and accessibility.
+
+## Color Theme Update (Latest Changes)
+- **Theme Change**: Switched from pink/red theme to green theme for a more calming and soothing user experience.
+- **Files Updated**:
+  - Home.jsx: Gradients, shadows, text colors, benefit cards
+  - MoodEntry.jsx: Container gradient and shadow
+  - FriendlyButton.jsx: Button gradient from pink-yellow to green-teal
+  - Chat.jsx: Header shadow
+  - ChatBubble.jsx: User message gradient from pink to green
+  - Progress.jsx: Chart colors for Sad and Anxious moods changed to green shades
+  - OnboardingModal.jsx: Title color and button gradient
+  - BreathingBackground.css: Background gradient
+  - MoodEntry.jsx: Happy mood border color changed to green
+- **Rationale**: Green is associated with calmness, nature, and healing, making it more appropriate for a mental wellness app than the previous pink/red theme which could be seen as more energetic or stressful.
 
 ---
 
