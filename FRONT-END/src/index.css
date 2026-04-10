@@ -1,5 +1,5 @@
 @import "./styles/theme.css";
-@import "../components/BreathingBackground.css";
+@import "../src/components/BreathingBackground.css";
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

@@ -1,4 +1,4 @@
-// src/components/BreathingBackground.css
+ /* src/components/BreathingBackground.css */
 .breathing-bg {
   background: linear-gradient(120deg, #ffe0ec 0%, #e0f7fa 100%);
   animation: breathing 8s ease-in-out infinite;
