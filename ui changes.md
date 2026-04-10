@@ -141,4 +141,72 @@
 
 ---
 
-*Buddy Name feature fully integrated across frontend and backend.*
+## Chat Message UI Fixes
+
+### 1. Avatar Size Fix
+- Reduced avatar size to 35px (width and height).
+- Made circular with border-radius: 50%.
+- Used object-fit: cover to prevent stretching.
+- Added margin: 0 8px for spacing.
+
+### 2. Message Alignment
+- AI messages: Left-aligned with avatar on left.
+- User messages: Right-aligned with avatar on right, flex-direction: row-reverse.
+
+### 3. Layout Structure
+- Used flexbox: .message with display: flex.
+- AI: justify-content: flex-start.
+- User: justify-content: flex-end, flex-direction: row-reverse.
+
+### 4. ChatMessage Component Update
+- Refactored to new structure:
+  - <div className={`message ${sender}`}>
+    - <img className="avatar" />
+    - <div className="message-content">
+      - <span className="name">{name}</span>
+      - <p>{text}</p>
+    - </div>
+  - </div>
+
+### 5. CSS Changes
+- Added styles for .message, .avatar, .message-content, .name.
+- Background colors: AI #f1f1f1, User #d1e7ff.
+- Max-width 60% for message-content.
+- Name: bold, 12px, margin-bottom 2px.
+
+### 6. Ensure
+- Messages resemble WhatsApp/Chat apps.
+- No overlapping or oversized images.
+- Responsive layout maintained.
+
+---
+
+## Home Page Enhancement & Depression Test Overhaul
+
+### TASK 1: Home Page Enhancement
+- Added new section below hero with app description.
+- Benefits section with 4 bullet points: 24/7 support, safe space, personalized buddy, insights.
+- Contact page link for feature requests.
+- "Start Depression Test" button navigating to /depression-test.
+- Clean, modern styling with cards, centered, mobile responsive.
+
+### TASK 2: Depression Test Page
+- Replaced single textbox with structured questionnaire (7 questions).
+- Questions: Sadness, interest, sleep, energy, concentration, hopelessness, anxiety.
+- Options: Never, Sometimes, Often, Always (radio buttons).
+- Optional additional text input.
+- Combines answers into structured string for backend.
+- Sends to same POST /depression/analyze-text API.
+- Displays results exactly as before (percentage, severity, explanation).
+- Form validation: All questions required.
+- Loading state, error handling.
+- UI: Clean layout with sections, submit button disabled if incomplete.
+
+### Code Quality
+- Modular code maintained.
+- Existing API and routing preserved.
+- No breaking changes to chat or profile.
+
+---
+
+*Home page now informative and engaging; Depression test now structured and user-friendly.*

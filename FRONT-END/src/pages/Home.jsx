@@ -91,6 +91,43 @@ function Home() {
           </div>
         </div>
       </section>
+
+      {/* NEW SECTION: App Description and Benefits */}
+      <section className="app-info" style={{ padding: "60px 40px", background: "#fff", textAlign: "center" }}>
+        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+          <h2 style={{ fontSize: "32px", marginBottom: "20px", color: "#d72660" }}>About Mental Buddy</h2>
+          <p style={{ fontSize: "18px", marginBottom: "40px", color: "#3a3a3a" }}>
+            Mental Buddy is your AI-powered mental wellness companion, designed to provide 24/7 emotional support, personalized conversations, and insights to help you navigate your feelings in a safe, non-judgmental space.
+          </p>
+
+          <div className="benefits" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "20px", marginBottom: "40px" }}>
+            <div className="benefit-card" style={{ padding: "20px", borderRadius: "12px", boxShadow: "0 4px 12px #ffe0ec33", background: "#f9f9f9" }}>
+              <h3 style={{ fontSize: "20px", marginBottom: "10px", color: "#d72660" }}>24/7 Emotional Support</h3>
+              <p>Access help anytime, day or night, with your AI buddy ready to listen.</p>
+            </div>
+            <div className="benefit-card" style={{ padding: "20px", borderRadius: "12px", boxShadow: "0 4px 12px #ffe0ec33", background: "#f9f9f9" }}>
+              <h3 style={{ fontSize: "20px", marginBottom: "10px", color: "#d72660" }}>Safe Space to Express</h3>
+              <p>Share your thoughts freely without fear of judgment.</p>
+            </div>
+            <div className="benefit-card" style={{ padding: "20px", borderRadius: "12px", boxShadow: "0 4px 12px #ffe0ec33", background: "#f9f9f9" }}>
+              <h3 style={{ fontSize: "20px", marginBottom: "10px", color: "#d72660" }}>Personalized AI Buddy</h3>
+              <p>Customize your buddy's name and avatar for a more personal experience.</p>
+            </div>
+            <div className="benefit-card" style={{ padding: "20px", borderRadius: "12px", boxShadow: "0 4px 12px #ffe0ec33", background: "#f9f9f9" }}>
+              <h3 style={{ fontSize: "20px", marginBottom: "10px", color: "#d72660" }}>Mental Health Insights</h3>
+              <p>Get tailored suggestions and track your mood over time.</p>
+            </div>
+          </div>
+
+          <p style={{ fontSize: "16px", marginBottom: "20px", color: "#666" }}>
+            If you feel any modifications or features are required, please visit our <Link to="/contact" style={{ color: "#d72660", textDecoration: "underline" }}>Contact Page</Link> to let us know.
+          </p>
+
+          <FriendlyButton onClick={() => navigate('/depression-test')} style={{ fontSize: 18, padding: "14px 36px" }}>
+            Start Depression Test
+          </FriendlyButton>
+        </div>
+      </section>
     </>
   );
 }
