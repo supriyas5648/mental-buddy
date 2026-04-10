@@ -49,4 +49,51 @@
 
 ---
 
-*This plan focuses on emotional design and user comfort, not just aesthetics. See code and component suggestions in the implementation phase.*
+## Chat UI Improvements (Latest Update)
+
+### 1. Removed Blur Effects
+- Eliminated blur filter from BreathingBackground animation (removed `blur(1.5px)` in keyframe).
+- Chat background is now clear and sharp.
+
+### 2. Structured Message Display
+- Messages now display in format: [Avatar] NAME: <message>
+- AI messages: Left-aligned with AI name and avatar.
+- User messages: Right-aligned with user name and avatar.
+- Names are bold, avatars are 32px circular.
+
+### 3. Avatar Support
+- AI avatar: Fetched from user profile preferences (buddyAvatar).
+- User avatar: Fetched from user profile (avatar), fallback to default.
+- Avatars aligned with text using flexbox.
+
+### 4. Dynamic AI Name
+- AI name fetched from profile preferences (buddyName), default "Mental Buddy".
+- Stored in component state, updated on load.
+
+### 5. User Name Handling
+- User name: Fetched from profile (name), default "You".
+- Displayed before user messages.
+
+### 6. Component Refactoring
+- Created `ChatMessage` component: Reusable, takes props (text, sender, name, avatar).
+- Updated Chat.jsx to use ChatMessage instead of ChatBubble.
+- Added profile fetching logic.
+
+### 7. Styling & Layout
+- Flexbox for alignment (AI left, user right).
+- Spacing between avatar and text.
+- Clean, readable design similar to WhatsApp/ChatGPT.
+- Responsive layout maintained.
+
+### 8. Data Flow
+- Messages use sender: "ai" | "user".
+- Profile data fetched via API on component mount.
+- No breaking changes to existing chat logic.
+
+### 9. State Management
+- Profile data stored in local component state.
+- AI name/avatar, user name/avatar loaded asynchronously.
+
+---
+
+*These changes enhance the chat UI with structured display, avatars, and dynamic personalization while maintaining existing functionality.*

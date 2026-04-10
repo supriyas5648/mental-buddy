@@ -1,9 +1,10 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import BreathingBackground from "../components/BreathingBackground";
 import AnimatedAvatar from "../components/AnimatedAvatar";
-import ChatBubble from "../components/ChatBubble";
+import ChatMessage from "../components/ChatMessage";
 import FriendlyButton from "../components/FriendlyButton";
 import "../components/BreathingBackground.css";
 import "../styles/chat.css";
@@ -16,14 +17,41 @@ function Chat() {
     const [messages, setMessages] = useState([
         {
             id: 'init-1',
-            sender: "bot",
-            text: "Hey! I’m your Mental Buddy. How are you feeling today?",
+            sender: "ai",
+            text: "Hey! I'm your Mental Buddy. How are you feeling today?",
             uiOnly: true
         }
     ]);
     const [inputText, setInputText] = useState("");
     const [isTyping, setIsTyping] = useState(false);
+    const [aiName, setAiName] = useState("Mental Buddy");
+    const [aiAvatar, setAiAvatar] = useState("/src/assets/app_logo.jpg");
+    const [userName, setUserName] = useState("You");
+    const [userAvatar, setUserAvatar] = useState("/src/assets/default-user.png");
     const messagesEndRef = useRef(null);
+
+    // Load profile data
+    useEffect(() => {
+        const loadProfile = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                if (!token) return;
+                const res = await axios.get(`${API_BASE_URL}/profile`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                const { name, avatar, preferences } = res.data;
+                setUserName(name || "You");
+                setUserAvatar(avatar || "/src/assets/default-user.png");
+                if (preferences) {
+                    setAiName(preferences.buddyName || "Mental Buddy");
+                    setAiAvatar(preferences.buddyAvatar || "/src/assets/app_logo.jpg");
+                }
+            } catch (err) {
+                console.error("Failed to load profile:", err);
+            }
+        };
+        loadProfile();
+    }, []);
 
     // Auto-scroll to bottom
     useEffect(() => {
@@ -55,14 +83,14 @@ function Chat() {
             const data = await response.json();
             const botMsg = {
                 id: Date.now() + 1,
-                sender: "bot",
+                sender: "ai",
                 text: data.reply,
             };
             setMessages((prev) => [...prev, botMsg]);
         } catch (error) {
             const errorMsg = {
                 id: Date.now() + 2,
-                sender: "bot",
+                sender: "ai",
                 text: "⚠️ Sorry, I couldn't connect to the server. Please ensure the backend is running.",
             };
             setMessages((prev) => [...prev, errorMsg]);
@@ -82,8 +110,8 @@ function Chat() {
                 <header className="chat-header" style={{ background: "rgba(255,255,255,0.7)", boxShadow: "0 2px 8px #ffe0ec33" }}>
                     <Link to="/home" className="back-btn">← Back</Link>
                     <div className="flex items-center gap-2">
-                        <AnimatedAvatar src="/src/assets/app_logo.jpg" alt="Buddy Avatar" />
-                        <h2 className="friendly text-xl">Mental Buddy</h2>
+                        <AnimatedAvatar src={aiAvatar} alt="Buddy Avatar" />
+                        <h2 className="friendly text-xl">{aiName}</h2>
                     </div>
                     <div style={{ width: "40px" }}></div>
                 </header>
@@ -91,15 +119,21 @@ function Chat() {
                 {/* Messages */}
                 <div className="chat-messages" style={{ background: "none" }}>
                     {messages.map((msg, idx) => (
-                        <ChatBubble
+                        <ChatMessage
                             key={msg.id}
-                            sender={msg.sender}
                             text={msg.text}
-                            isLast={idx === messages.length - 1}
+                            sender={msg.sender}
+                            name={msg.sender === "user" ? userName : aiName}
+                            avatar={msg.sender === "user" ? userAvatar : aiAvatar}
                         />
                     ))}
                     {isTyping && (
-                        <ChatBubble sender="bot" text={<span className="typing">Mental Buddy is typing...</span>} />
+                        <ChatMessage
+                            text={<span className="typing">{aiName} is typing...</span>}
+                            sender="ai"
+                            name={aiName}
+                            avatar={aiAvatar}
+                        />
                     )}
                     <div ref={messagesEndRef} />
                 </div>
