@@ -13,7 +13,7 @@ function Profile() {
     avatar: "",
     age: null,
     location: "",
-    preferences: { buddy: "female" } // default
+    preferences: { buddy: "female", buddyName: "Mental Buddy" } // default
   });
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -24,7 +24,7 @@ function Profile() {
     avatar: "",
     age: null,
     location: "",
-    preferences: { buddy: "female" }
+    preferences: { buddy: "female", buddyName: "Mental Buddy" }
   });
 
   // Fetch profile data on component mount
@@ -51,7 +51,10 @@ function Profile() {
             avatar: response.data.avatar || "",
             age: response.data.age || null,
             location: response.data.location || "",
-            preferences: response.data.preferences || { buddy: "female" }
+            preferences: {
+              buddy: response.data.preferences?.buddy || "female",
+              buddyName: response.data.preferences?.buddyName || "Mental Buddy"
+            }
           });
         }
         setLoading(false);
@@ -102,6 +105,17 @@ function Profile() {
       preferences: {
         ...editData.preferences,
         buddy: e.target.value
+      }
+    });
+  };
+
+  // handle buddy name change
+  const handleBuddyNameChange = (e) => {
+    setEditData({
+      ...editData,
+      preferences: {
+        ...editData.preferences,
+        buddyName: e.target.value
       }
     });
   };
@@ -223,6 +237,11 @@ function Profile() {
                 <label>Buddy avatar:</label>
                 <p>{(profile.preferences && profile.preferences.buddy) || "female"}</p>
               </div>
+
+              <div className="info-item">
+                <label>Buddy name:</label>
+                <p>{(profile.preferences && profile.preferences.buddyName) || "Mental Buddy"}</p>
+              </div>
             </div>
 
             <button className="edit-btn" onClick={() => setIsEditing(true)}>
@@ -320,6 +339,17 @@ function Profile() {
                 </select>
               </div>
 
+              <div className="form-group">
+                <label htmlFor="buddyName">Buddy Name</label>
+                <input
+                  type="text"
+                  id="buddyName"
+                  value={editData.preferences.buddyName}
+                  onChange={handleBuddyNameChange}
+                  placeholder="Enter your buddy's name"
+                />
+              </div>
+
               <div className="form-actions">
                 <button
                   className="save-btn"
@@ -338,7 +368,10 @@ function Profile() {
                       avatar: profile.avatar || "",
                       age: profile.age || null,
                       location: profile.location || "",
-                      preferences: profile.preferences || { buddy: "female" }
+                      preferences: {
+                        buddy: profile.preferences?.buddy || "female",
+                        buddyName: profile.preferences?.buddyName || "Mental Buddy"
+                      }
                     });
                   }}
                 >

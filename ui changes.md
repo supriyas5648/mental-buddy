@@ -96,4 +96,49 @@
 
 ---
 
-*These changes enhance the chat UI with structured display, avatars, and dynamic personalization while maintaining existing functionality.*
+## Buddy Name Feature Implementation
+
+### 1. Profile Page (Frontend)
+- Added "Buddy Name" input field in edit mode.
+- Pre-fills with existing buddyName from profile.preferences.buddyName.
+- Saves on "Save Changes" button via POST /profile.
+
+### 2. State Handling
+- Updated profile and editData state to include buddyName in preferences.
+- Added handleBuddyNameChange handler for input updates.
+
+### 3. Save to Backend
+- POST /profile sends preferences object including buddyName.
+- Backend upserts profile with buddyName in preferences.
+
+### 4. Backend Changes
+- Profile schema already supports preferences as object.
+- POST /profile accepts and saves buddyName in preferences.
+- GET /profile returns preferences.buddyName.
+
+### 5. Fetch Profile
+- GET /profile returns buddyName in preferences object.
+
+### 6. Chat Page Integration
+- Chat.jsx fetches profile on load, extracts preferences.buddyName.
+- Sets aiName state, uses in header and messages.
+- Fallback to "Mental Buddy" if not set.
+
+### 7. UI Usage
+- AI messages display dynamic buddyName: "Alex: Hello..."
+- Header shows dynamic name.
+
+### 8. Fallback Handling
+- Defaults to "Mental Buddy" if buddyName empty or not set.
+
+### 9. Code Quality
+- Modular components maintained.
+- No breaking changes to existing logic.
+- Error handling preserved.
+
+### 10. Optional Enhancement
+- Added localStorage save for buddyName after fetch to reduce API calls.
+
+---
+
+*Buddy Name feature fully integrated across frontend and backend.*

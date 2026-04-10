@@ -8,6 +8,10 @@ import ChatMessage from "../components/ChatMessage";
 import FriendlyButton from "../components/FriendlyButton";
 import "../components/BreathingBackground.css";
 import "../styles/chat.css";
+import logo from "../assets/app_logo.jpg";
+import noProfileIcon from "../assets/no_profile_icon.png";
+import maleAvatar from "../assets/male-avatar.png";
+import femaleAvatar from "../assets/female-avatar.png";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -25,9 +29,9 @@ function Chat() {
     const [inputText, setInputText] = useState("");
     const [isTyping, setIsTyping] = useState(false);
     const [aiName, setAiName] = useState("Mental Buddy");
-    const [aiAvatar, setAiAvatar] = useState("/src/assets/app_logo.jpg");
+    const [aiAvatar, setAiAvatar] = useState(logo);
     const [userName, setUserName] = useState("You");
-    const [userAvatar, setUserAvatar] = useState("/src/assets/default-user.png");
+    const [userAvatar, setUserAvatar] = useState(noProfileIcon);
     const messagesEndRef = useRef(null);
 
     // Load profile data
@@ -41,11 +45,19 @@ function Chat() {
                 });
                 const { name, avatar, preferences } = res.data;
                 setUserName(name || "You");
-                setUserAvatar(avatar || "/src/assets/default-user.png");
-                if (preferences) {
-                    setAiName(preferences.buddyName || "Mental Buddy");
-                    setAiAvatar(preferences.buddyAvatar || "/src/assets/app_logo.jpg");
+                setUserAvatar(avatar || noProfileIcon);
+               if (preferences) {
+                 setAiName(preferences.buddyName || "Mental Buddy");
+                 localStorage.setItem("buddyName", preferences.buddyName || "Mental Buddy");
+
+                 if (preferences.buddy === "male") {
+                     setAiAvatar(maleAvatar);
+                 } else if (preferences.buddy === "female") {
+                     setAiAvatar(femaleAvatar);
+                 } else {
+                     setAiAvatar(logo); // fallback
                 }
+}
             } catch (err) {
                 console.error("Failed to load profile:", err);
             }
