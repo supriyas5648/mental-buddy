@@ -7,6 +7,7 @@ import Chat from "./pages/Chat";
 import MoodEntry from "./pages/MoodEntry";
 import Progress from "./pages/Progress";
 import DepressionTest from "./pages/DepressionTest";
+import Contact from "./pages/Contact";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/home" element={<ProtectedRoute element={<Home />} />} />
         <Route path="/profile" element={<ProtectedRoute element={<Profile />} />} />
         <Route path="/chat" element={<ProtectedRoute element={<Chat />} />} />
+        <Route path="/contact" element={<ProtectedRoute element={<Contact />} />} />
         <Route path="/MoodEntry" element={<ProtectedRoute element={<MoodEntry />} />} />
         <Route path="/progress" element={<ProtectedRoute element={<Progress />} />} />
         <Route path="/depression-test" element={<ProtectedRoute element={<DepressionTest />} />} />
