@@ -121,8 +121,8 @@ function Chat() {
                 <header className="chat-header" style={{ background: "rgba(255,255,255,0.7)", boxShadow: "0 2px 8px #e6f9ec33" }}>
                     <Link to="/home" className="back-btn">← Back</Link>
                     <div className="flex items-center gap-2">
-                        <img src={aiAvatar} alt="Buddy Avatar" className="w-8 h-8 rounded-full object-cover" />
-                        <h2 className="friendly text-xl">{aiName}</h2>
+                        {/* <img src={aiAvatar} alt="Buddy Avatar" className="w-8 h-8 rounded-full object-cover" />
+                        <h2 className="friendly text-xl">{aiName}</h2> */}
                     </div>
                     <div style={{ width: "40px" }}></div>
                 </header>
